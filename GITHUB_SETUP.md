@@ -22,7 +22,7 @@ After the repository is created, you'll see commands on GitHub. Run these locall
 cd "c:\Users\windows 10\Desktop\DL Diabetes Predictor"
 
 # Add the remote repository
-git remote add origin https://github.com/MWA-MBA/DL-Diabetes-Predictor.git
+git remote add origin https://github.com/YOUR_USERNAME/DL-Diabetes-Predictor.git
 
 # Rename branch to main (if needed)
 git branch -M main
@@ -30,6 +30,8 @@ git branch -M main
 # Push to GitHub
 git push -u origin main
 ```
+
+**Replace `YOUR_USERNAME` with your actual GitHub username.**
 
 ## Step 3: Verify on GitHub
 
@@ -73,13 +75,11 @@ git push -u origin main
 
 Once deployed on Render:
 
-1. **API Endpoint**: `https://diabetes-prediction-api.onrender.com`
-   - API Docs: `https://diabetes-prediction-api.onrender.com/docs`
-   - Health Check: `https://diabetes-prediction-api.onrender.com/health`
+1. **API Endpoint**: `https://<your-api-service>.onrender.com`
+   - API Docs: `https://<your-api-service>.onrender.com/docs`
+   - Health Check: `https://<your-api-service>.onrender.com/health`
 
-2. **Web Interface**: `https://diabetes-prediction-web.onrender.com`
-
-*(Note: These URLs are examples - they'll depend on your Render service names)*
+2. **Web Interface**: `https://<your-web-service>.onrender.com`
 
 ## Troubleshooting
 
