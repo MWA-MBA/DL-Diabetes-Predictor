@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  # FastAPI backend
+  api:
+    build: .
+    container_name: diabetes-prediction-api
+    ports:
+      - "8000:8000"
+    environment:
+      - ENVIRONMENT=production
+      - PORT=8000
+    volumes:
+      - ./deep_learning_model.keras:/app/deep_learning_model.keras
+    command: uvicorn api:app --host 0.0.0.0 --port 8000
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Streamlit frontend
+  web:
+    build: .
+    container_name: diabetes-prediction-web
+    ports:
+      - "8501:8501"
+    environment:
+      - ENVIRONMENT=production
+    volumes:
+      - ./deep_learning_model.keras:/app/deep_learning_model.keras
+    command: streamlit run dl_app.py --server.port=8501 --server.address=0.0.0.0
+    restart: unless-stopped
+    depends_on:
+      - api
+
+  # Optional: Nginx reverse proxy
+  # nginx:
+  #   image: nginx:latest
+  #   container_name: diabetes-prediction-proxy
+  #   ports:
+  #     - "80:80"
+  #     - "443:443"
+  #   volumes:
+  #     - ./nginx.conf:/etc/nginx/nginx.conf
+  #   depends_on:
+  #     - api
+  #     - web

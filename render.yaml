@@ -1,0 +1,32 @@
+services:
+  - type: web
+    name: diabetes-prediction-api
+    env: python
+    plan: free
+    pythonVersion: 3.11
+    startCommand: uvicorn api:app --host 0.0.0.0 --port $PORT
+    routes:
+      - path: /api
+        destination: /
+      - path: /docs
+        destination: /docs
+      - path: /health
+        destination: /health
+    envVars:
+      - key: ENVIRONMENT
+        value: production
+      - key: PORT
+        value: 8000
+
+  - type: web
+    name: diabetes-prediction-web
+    env: python
+    plan: free
+    pythonVersion: 3.11
+    startCommand: streamlit run dl_app.py --server.port=8501 --server.address=0.0.0.0 --client.toolbarMode=minimal
+    routes:
+      - path: /
+        destination: /
+    envVars:
+      - key: ENVIRONMENT
+        value: production
